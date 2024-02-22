@@ -1,0 +1,104 @@
+{
+    "copy str": {
+        "prefix": "while",
+        "body": [
+            "while ((*${1:dest} = *${2:src}))\n\t;"
+        ],
+        "description": "copy from char * src to char * dest"
+    },
+    "skip line": {
+        "prefix": "while",
+        "body": [
+            "while (getchar() != '\\n')\n\t;"
+        ],
+        "description": "skip rest of line"
+
+    },
+    "skip chars": {
+        "prefix": "while",
+        "body": [
+            "while (getchar() != '${1: }')\n\t;"
+        ],
+        "description": "skip chars like blanks"
+
+    },
+    "reach empty char": {
+        "prefix": "while",
+        "body": [
+            "while (*${1:ptr}++)\n\t;"
+        ],
+        "description": "make ptr point to next empty char"
+    },
+    "init array normal": {
+        "prefix": "arr",
+        "body": [
+            "${1:int} ${2:arrName}[${3}] = { $0 };"
+        ],
+        "description": "init array in declaration"
+    },
+    "init array with compound literal": {
+        "prefix": "arr",
+        "body": [
+            "${1:int} *${2:ptr} = ($1[$3]){ $0 };"
+        ],
+        "description": "init array with compound literal in declaration"
+    },
+    "declare array ptr": {
+        "prefix": "arr",
+        "body": [
+            "${1:int} (*${2:ptr})[${3:NUM_COLS}]"
+        ],
+        "description": "declare an array pointer"
+    },
+    "variable length array": {
+        "prefix": "arr",
+        "body": [
+            "struct ${1:vstring} {",
+            "\tint len;",
+            "\tchar str[$0];",
+            "};"
+        ],
+        "description": "struct hack / flexible array member, realize VLA"
+    },
+    "const ptr's value": {
+        "prefix": "const",
+        "body": [
+            "const ${1:int} *${2:ptr}"
+        ],
+        "description": "declare the value *p is const"
+    },
+    "const ptr itself": {
+        "prefix": "const",
+        "body": [
+            "${1:int} * const ${2:ptr}"
+        ],
+        "description": "declare the pointer p itself is const"
+    },
+    "declare union with enum to indicate kind": {
+        "prefix": "union",
+        "body": [
+            "struct ${1:node} {",
+            "\tenum { ${2:INT_KIND}, ${3:DOUBLE_KIND} } ${4:kind};",
+            "\tunion {",
+            "\t\t${5:int} ${6:i};",
+            "\t\t${7:double} ${8:d};",
+            "\t} ${9:value};",
+            "};"
+        ],
+        "description": "declare union with enum to indicate kind"
+    },
+    "declare func ptr": {
+        "prefix": "func",
+        "body": [
+            "${1:int} (*${2:func})(${3:int})"
+        ],
+        "description": "declare func ptr"
+    },
+    "read chars of a file": {
+        "prefix": "file",
+        "body": [
+            "while ((${1:ch} = getc(${2:fp})) != EOF) {\n\t$0\n}"
+        ],
+        "description": "read chars of a file"
+    }
+}

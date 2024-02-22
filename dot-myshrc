@@ -1,0 +1,64 @@
+# >>> myshrc >>>
+
+# >>>>> BASH ONLY >>>>>
+if [ -n "$BASH" ]; then
+    export PROMPT_COMMAND="history -a" # write history into ~/.bash_history realtime
+    export HISTTIMEFORMAT="%F %T " # show time and user
+    
+    # set -o vi # enable bash vi mode (replaced by .inputrc)
+    
+    # ANSI escape code scheme: \[\e[${FG};${BG}m\]
+    PS1='\[\e[4;49m\]\t\[\e[0m\] \[\e[38;2;250;189;47;49m\]\u@\h\[\e[0m\]:\w $(if [ $? -eq 0 ]; then echo -ne "\[\e[38;2;131;165;152;49m\]\\u263B\[\e[0m\]"; else echo -ne "\[\e[38;2;254;128;25;49m\]\\u26D2\[\e[0m\]"; fi)  $(num=$(jobs | wc -l); if [ $num -gt 0 ]; then echo -ne "\[\e[38;2;250;189;47;49m\]\\u26D9\[\e[0m\]"; fi)\n\[\e[38;2;250;189;47;49m\]$\[\e[0m\] '
+fi
+# <<<<< BASH ONLY <<<<<
+
+VIM=nvim
+# For programs like visudo, pressing v under bash vi mode, crontab, etc.
+export VISUAL=${VIM}
+export EDITOR=${VIM}
+# For programs like man, etc.
+export PAGER=less
+
+# alias
+alias rm='rm -i'
+alias cp='cp -i'
+alias ls='ls --hyperlink --color=auto'
+alias ll='ls -alF'
+#alias tmux='history -w; TERM=screen-256color-bce tmux' # save history so that it won't get lost in tmux
+if command -v lvim &> /dev/null; then
+    alias vim='lvim'
+fi
+
+# Advice
+# check if disk partition is right, /home, swap, /, ...
+#echo "Detect md, mdadm exists, suggest make software RAID 5 and spare disk"
+# check if failed device appears in raid
+# remind add md raid into fstab
+
+# To solve error when open (neo)vim in (neo)vim terminal
+unset VIMRUNTIME
+unset VIM
+
+# Set up golang proxy
+export GOPROXY=http://www.goproxy.cn,http://www.goproxy.io,direct
+
+# Set up clash proxy
+# Allow WSL2 to access Clash: https://cloud.tencent.com/developer/article/1913248
+proxy_ip=
+proxy_port=
+alias setp='
+export https_proxy="http://${proxy_ip}:${proxy_port}";
+export http_proxy="http://${proxy_ip}:${proxy_port}";
+export all_proxy="sock5://${proxy_ip}:${proxy_port}";
+export ALL_PROXY="sock5://${proxy_ip}:${proxy_port}";
+'
+alias unsetp='unset https_proxy http_proxy all_proxy ALL_PROXY'
+alias echop='echo ${proxy_ip}:${proxy_port}'
+setp # auto set proxy
+
+export LANG=en_US.UTF-8
+
+export PATH=${PATH}:/usr/local/go/bin:~/.local/bin
+
+# <<< myshrc <<<
+

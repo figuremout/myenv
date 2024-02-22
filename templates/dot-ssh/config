@@ -1,0 +1,7 @@
+Host foobar
+  HostName <IP>
+  User <User>
+  Port <Port>
+  PubkeyAcceptedKeyTypes +ssh-rsa
+  HostKeyAlgorithms +ssh-rsa
+  IdentityFile "~/.ssh/id_rsa"

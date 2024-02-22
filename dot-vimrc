@@ -1,0 +1,185 @@
+" Author: Zhao Jiaming
+" ++++++++++++++++++++++++++ GET vim-plug +++++++++++++++++++++++++++++++++
+" Install vim-plug if not found & run PlugInstall
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source
+endif
+
+" ++++++++++++++++++++++++++ BEGIN +++++++++++++++++++++++++++++++++
+" vim-plug recommend to specify a custom plugin directory
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+set nocompatible              " be iMproved, required
+
+" ++++++++++++++++++++++++++ ADD PLUGINS +++++++++++++++++++++++++++++++++
+" RULE: https://github.com/junegunn/vim-plug#example
+Plug 'morhetz/gruvbox' " colorscheme
+"Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'} " filetree, only open when use
+"Plug 'git@github.com:neoclide/coc.nvim.git', {'branch': 'release'} " code auto-complete
+Plug 'git@github.com:vivien/vim-linux-coding-style.git' " linux coding style
+
+" ++++++++++++++++++++++++++ END +++++++++++++++++++++++++++++++++
+" All of your Plugins must be added before the following line
+" Initialize plugin system
+call plug#end()
+
+
+" ++++++++++++++++++++++++++ CONFIG PLUGINS +++++++++++++++++++++++++++++++++
+" Plugin gruvbox config
+" In order to change these options, type let g:gruvbox_(option) = '(value)' in your .vimrc
+" (with quotes) before the colorscheme gruvbox statement.
+colorscheme gruvbox
+
+" Plugin NERDTree config
+" Exit Vim if NERDTree is the only window left.
+" autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') " && b:NERDTree.isTabTree() | quit | endif
+" nnoremap <leader>t :NERDTreeToggle<CR> " open
+
+" coc.nvim config
+" coc.nvim works best on vim >= 8.1.1719 and neovim >= 0.4.0, consider upgrade your vim.
+" let g:coc_disable_startup_warning = 1
+
+" ++++++++++++++++++++++++++ NATIVE CONFIGS ++++++++++++++++++++++++++++++++++
+" Put your non-Plugin stuff after this line
+" appearance
+set bg=dark
+set nu
+set cursorline " highlight cursorline
+set cursorcolumn " highlight cursorcolumn
+set hlsearch
+set backspace=2 " enable backspace to del
+set statusline=%1*\%<%.50F\ %y\             " show filename & filepath (max 50 char) & filetype
+set statusline+=%=%2*\%m%r%h%w\ %*        " show vim buf status
+set statusline+=%3*\%{&ff}\[%{&fenc}]\ %*   " show file encoding
+set statusline+=%4*\ row:%l/%L,col:%c\ %*   " show cursorline row & col
+set statusline+=%5*\%3p%%\%*            " show cursorline percent
+set laststatus=2 " always show status line at last No.2 line
+
+" show invisiable SpecialKey
+set listchars=tab:>-,space:·,eol:$
+
+"set list
+
+" not hightlight space and tab"
+" To avoid direct modification hi SpecialKey For the color of this item,
+" we can customize a color group and set it to take effect only for spaces and tab characters
+highlight MyColorGroup guifg=darkgrey ctermfg=darkgrey
+match MyColorGroup /\t\| /
+
+" change to directory of current file automatically, except terminal
+augroup AutoChdir
+  autocmd!
+  autocmd BufEnter * if &buftype !=# 'terminal' | lchdir %:p:h | endif
+augroup END
+
+set incsearch " show search result in real time
+
+" encoding
+set encoding=utf-8
+set fileencodings=utf-8,gbk,big5
+
+" ++++++++++++++++++++++++++ CODING STYLE +++++++++++++++++++++++++++++++++
+" 80 characters limit per line
+set textwidth=0 " not auto break a line when it gets too long
+" Method 0
+set colorcolumn=81
+highlight ColorColumn ctermbg=Black ctermfg=DarkRed
+" Uncomment below if you want to make 80+ columns highlighted as well.
+"execute "set colorcolumn=" . join(range(81,335), ',')
+
+" Method 1
+"au BufRead,BufNewFile *.asm,*.c,*.cpp,*.java,*.cs,*.sh,*.lua,*.pl,*.pm,*.py,*.rb,*.hs,*.vim,*.go 2match Underlined /.\%81v/
+
+" Highlight trailing spaces
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+" Tab Indent
+"filetype indent off " conflit with {} completion, better close ???
+set cindent
+autocmd FileType python set shiftwidth=4 | set tabstop=4 | set expandtab
+autocmd FileType c,cpp,asm,go,make set shiftwidth=8 | set tabstop=8 | set noexpandtab
+
+" jump out bracket when right bracket is pressed
+func SmartBracket(bracket)
+    if a:bracket == '{'
+        if getline('.')[col('.') - 2] == '$'
+            " var in shell
+            return "{}\<LEFT>"
+        elseif col('.') == col("$")
+            return "{\<CR>}\<ESC>O"
+        else
+            return "{}\<LEFT>"
+        endif
+    elseif a:bracket == '"'
+        if getline('.')[col('.') - 1] == '"'
+            return "\<RIGHT>"
+        else
+            return "\"\"\<LEFT>"
+        endif
+    elseif a:bracket == "'"
+        if getline('.')[col('.') - 1] == "'"
+            return "\<RIGHT>"
+        else
+            return "''\<LEFT>"
+        endif
+    endif
+
+    let left = ['(', '[', '{']
+    let right = [')', ']', '}']
+
+    for i in range(len(left))
+        if a:bracket == left[i]
+            return left[i] . right[i] . "\<LEFT>"
+        elseif a:bracket == right[i]
+            if getline('.')[col('.') - 1] == right[i]
+                return "\<RIGHT>"
+            else
+                return a:bracket
+            endif
+        endif
+    endfor
+endfunc
+
+inoremap ( <c-r>=SmartBracket("(")<CR>
+inoremap ) <c-r>=SmartBracket(")")<CR>
+inoremap [ <c-r>=SmartBracket("[")<CR>
+inoremap ] <c-r>=SmartBracket("]")<CR>
+inoremap { <c-r>=SmartBracket("{")<CR>
+inoremap } <c-r>=SmartBracket("}")<CR>
+inoremap " <c-r>=SmartBracket('"')<CR>
+inoremap ' <c-r>=SmartBracket("'")<CR>
+
+inoremap jj <ESC>
+
+" Autocomplete multi line comments, like /* */
+set formatoptions+=r
+
+" key map
+" default leader is backslash, <CR> represents ENTER
+" Notice: 1. key combination must be pressed quickly;
+let mapleader = " "
+nnoremap <leader>h <c-w>h " switch to left window
+nnoremap <leader>l <c-w>l " switch to right window
+nnoremap <leader>k <c-w>k " switch to up window
+nnoremap <leader>j <c-w>j " switch to down window
+" auto switch between windows
+nnoremap <leader><leader> <c-w>w
+
+vnoremap < <gv " shift indent constantly under visual mode
+vnoremap > >gv " shift indent constantly under visual mode
+
+" resize pane equal automatically after window is resized
+autocmd VimResized * wincmd =
+
+" Enable hidden buffer
+set hidden

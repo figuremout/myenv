@@ -1,0 +1,42 @@
+# Arch wiki:
+# https://wiki.archlinuxcn.org/wiki/Readline
+set editing-mode vi
+set horizontal-scroll-mode off
+
+# Color files by types
+# Note that this may cause completion text blink in some terminals (e.g. xterm).
+set colored-stats On
+# Append char to indicate type
+set visible-stats On
+# Mark symlinked directories
+set mark-symlinked-directories On
+# Color the common prefix
+set colored-completion-prefix On
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
+
+$if mode=vi
+    # Change cursor style depending on vi mode
+    set show-mode-in-prompt on
+    $if term=linux
+        set vi-ins-mode-string \1\e[?0c\2
+	    set vi-cmd-mode-string \1\e[?8c\2
+    $else
+        set vi-ins-mode-string \1\e[6 q\2
+        set vi-cmd-mode-string \1\e[2 q\2
+    $endif
+
+    # Keymapping in normal mode
+    set keymap vi-command
+    "gg": beginning-of-history 
+    "G": end-of-history
+    "daw": "wbdw"
+    "diw": "wbde"
+    "ciw": "wbcw"
+    "caw": "wbdwi"
+    # Keymapping in insert mode
+    set keymap vi-insert
+    "jj": vi-movement-mode
+    # optionally: switch to block cursor before finishing a command
+    RETURN: "\e\n"
+$endif

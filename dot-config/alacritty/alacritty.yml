@@ -1,0 +1,22 @@
+import:
+  # - ~/.config/alacritty/themes/themes/gruvbox_material_medium_dark.yaml
+  - \\wsl.localhost\Ubuntu-22.04\home\zhao\.config\alacritty\themes\themes\gruvbox_material_medium_dark.yaml # FOR WINDOWS
+
+# FOR WINDOWS: Mannauly install nerd font and set to this terminal
+font:
+    normal:
+        family: DroidSansM Nerd Font Propo
+        style: Regular
+
+shell:
+  # program: tmux
+  program: wsl --cd ~ --exec tmux # FOR WINDOWS
+
+window:
+  decorations: None # no top bar
+  # startup_mode: "Fullscreen" # Maximize/Fullscreen when startup
+  startup_mode: "Maximized" # FOR WINDOWS
+
+key_bindings:
+  - { key: Z, mods: Control|Shift, action: ToggleFullscreen }
+  # - { key: C, mods: Control|Shift, action: CreateNewWindow }

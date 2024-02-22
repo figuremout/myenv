@@ -1,0 +1,37 @@
+# C extensions
+*.so
+
+# Byte-compiled
+__pycache__/
+
+# Distribution / packaging
+/*.egg-info/
+
+# Log
+log/
+nohup.out
+*.log
+
+# Binary
+bin/
+
+# Vendor
+vendor/
+
+# Backup
+## Indent backup file
+*~ 
+
+## Redis snapshot
+dump.rdb
+
+## Docker containers' data volume
+_data/
+
+# Workspace
+## VScode
+.vscode/
+
+## JupyterLab
+.ipynb_checkpoints/
+
