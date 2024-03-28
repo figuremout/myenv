@@ -1,7 +1,9 @@
+-- Basic vim configs for both nvim and lvim
 -- vim options
 local opt = vim.opt
 
 -- show
+opt.cmdheight = 0 -- EXPERIMENTAL hide cmdline
 opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "auto" -- show the sign column only when there is a sign to display
@@ -25,11 +27,12 @@ opt.smartindent = true
 
 -- operation
 opt.mouse = ""             -- disallow the mouse to be used in neovim
-opt.clipboard = ""         -- system clipboard accessibily. DISABLE it implicitly to avoid SEVERE PERFORMANCE ISSUE!!!
+-- opt.clipboard = ""         -- system clipboard accessibily. DISABLE it implicitly to avoid SEVERE PERFORMANCE ISSUE!!! (Really? But I need this function)
 opt.fileencoding = "utf-8" -- the encoding written to a file
 opt.ignorecase = true
 opt.smartcase = true
 opt.timeoutlen = 512 -- time to wait for a mapped sequence to complete (in milliseconds)
+opt.autochdir = true -- change working directory to the parent of current buffer
 
 -- MUST keep this. Terminal will be flushed after reopening without it.
 opt.hidden = true -- required to keep multiple buffers and open multiple buffers

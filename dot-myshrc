@@ -12,7 +12,11 @@ if [ -n "$BASH" ]; then
 fi
 # <<<<< BASH ONLY <<<<<
 
-VIM=nvim
+if command -v nvim &> /dev/null; then
+    VIM=nvim
+else
+    VIM=vim
+fi
 # For programs like visudo, pressing v under bash vi mode, crontab, etc.
 export VISUAL=${VIM}
 export EDITOR=${VIM}
