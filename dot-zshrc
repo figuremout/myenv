@@ -65,6 +65,12 @@ if [[ ! -d $ZSH_CUSTOM/plugins/zsh-syntax-highlighting ]]; then
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
+# Plugin conda-zsh-completion
+if [[ ! -d $ZSH_CUSTOM/plugins/conda-zsh-completion ]]; then
+    git clone https://github.com/conda-incubator/conda-zsh-completion \
+        ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion
+fi
+
 # Plugin zsh-autosuggestions
 # if [[ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]]; then
 #     git clone https://github.com/zsh-users/zsh-autosuggestions \
@@ -80,7 +86,7 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(vi-mode colored-man-pages safe-paste web-search z command-not-found \
-         copyfile tmux\
+         copyfile tmux conda-zsh-completion\
          zsh-syntax-highlighting) # make sure zsh-syntax-highlighting last
 
 # Config vi-mode plugin
@@ -97,6 +103,8 @@ ZSH_WEB_SEARCH_ENGINES=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+autoload -U compinit && compinit # Plugin conda-zsh-completion needs
 
 # User configuration
 source ~/.myshrc

@@ -1,31 +1,19 @@
-Collection of configurations
+Collection of configurations and templates.
+
 # Usage
-- `cp -i ./bash/bashrc ~/.bashrc`
-- `cp -i ./tmux/tmux.conf ~/.tmux.conf`
-- `cp -i ./vim/vimrc ~/.vimrc`
-- `cp -ri ./nvim/* ~/.config/nvim`
-- `cp -ri ./lvim/* ~/.config/lvim`
+Diff configs between home directory and myenv.
+```bash
+$ cd  myenv/
+$ ./diff.sh
+```
 
-./scripts
-Collection of tiny but useful scripts.
+Install dependencies and replace configs (old configs will be backuped).
+```bash
+$ ./install.sh
+```
 
-recommand:
-- vsc
-- inkscape
-- wps
-- qq, wechat
-- baidu pan
-- chrome
-- pdfsam
-- 飞书 腾讯会议
-- virtual box / qemu
-- 网易uu
-- clash / bywave
-- blender
-- LICEcap
-- starUML
-- godot
-- rufus ?
-- 网易云
-- wireshark
-- steam, wallpaper
+Diff configs between home directory and backup.
+```bash
+$ cd  myenv/
+$ ./diff.sh backup_xxx_xxx
+```

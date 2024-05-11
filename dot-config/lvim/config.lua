@@ -26,9 +26,6 @@ lvim.keys.normal_mode["<c-f>"] = ":Telescope live_grep<CR>"  -- search contents
 lvim.keys.normal_mode["<c-p>"] = ":Telescope find_files<CR>" -- search filename
 lvim.builtin.terminal.open_mapping = "<leader>\\"
 
--- -- Change theme settings
-lvim.colorscheme = 'gruvbox'
-
 -- -- to make it transparent, uncomment the following
 -- lvim.transparent_window = true
 
@@ -41,12 +38,9 @@ lvim.builtin.lualine.options = { section_separators = '', component_separators =
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 
 -- Core Plugins
-lvim.builtin.lualine.style = "default" -- use lualine
-local function codeium_status()        -- custom lualine component to show codeium status
-    return "AI" .. vim.api.nvim_call_function("codeium#GetStatusString", {})
-end
-lvim.builtin.lualine.sections.lualine_b = {
-    codeium_status,
+lvim.builtin.lualine.style = "default"      -- use lualine
+lvim.builtin.lualine.sections.lualine_b = { -- custom lualine component to show codeium status
+    function() return "AI" .. vim.api.nvim_call_function("codeium#GetStatusString", {}) end,
 }
 lvim.builtin.lualine.sections.lualine_c = {
     {
@@ -144,6 +138,8 @@ lvim.plugins = {
                 italic = { strings = false, comments = false, operators = false, folds = false, }, -- disable italic
                 contrast = "",                                                                     -- can be "hard", "soft" or empty string
             })
+            lvim.colorscheme =
+            'gruvbox' -- Change theme settings
         end,
     },
     {
@@ -187,7 +183,12 @@ lvim.plugins = {
     },
     {
         'Exafunction/codeium.vim',
-        event = 'BufEnter'
+        event = 'BufEnter',
+        config = function()
+            vim.g.codeium_no_map_tab = true     -- disable tab for accept key
+            vim.keymap.set('i', '<M-;>', function() return vim.fn['codeium#Accept']() end,
+                { expr = true, silent = true }) -- remap accept key
+        end
     }
 }
 
