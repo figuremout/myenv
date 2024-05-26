@@ -3,7 +3,7 @@ Collection of configurations and templates.
 # Usage
 Diff configs between home directory and myenv.
 ```bash
-$ cd  myenv/
+$ cd myenv/
 $ ./diff.sh
 ```
 
@@ -14,6 +14,6 @@ $ ./install.sh
 
 Diff configs between home directory and backup.
 ```bash
-$ cd  myenv/
+$ cd myenv/
 $ ./diff.sh backup_xxx_xxx
 ```
