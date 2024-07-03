@@ -23,6 +23,13 @@ Plug 'morhetz/gruvbox'
 " Filetree, only open when use
 "Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
 
+" Buffer line
+Plug 'bling/vim-bufferline'
+let g:bufferline_echo = 0
+autocmd VimEnter *
+  \ let &statusline='%{bufferline#refresh_status()}'
+    \ .bufferline#get_status_string()
+
 " LSP
 Plug 'prabirshrestha/vim-lsp' " No need to install node (coc.nvim) or language servers manually (LanguageClient-neovim), and do support vim 8 (YCM need 8.2.3995)
 Plug 'mattn/vim-lsp-settings' " Auto configurations for Language Servers for vim-lsp.
@@ -103,7 +110,6 @@ set laststatus=2 " always show status line at last No.2 line
 
 " show invisiable SpecialKey
 set listchars=tab:>-,space:·,eol:$
-
 "set list
 
 " not hightlight space and tab"

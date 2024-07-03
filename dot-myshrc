@@ -14,7 +14,7 @@ fi
 
 export LANG=en_US.UTF-8
 
-export PATH=${PATH}:/usr/local/go/bin:~/.local/bin:/usr/sbin:/usr/local/cuda/bin
+export PATH=${PATH}:/usr/local/go/bin:~/.local/bin:/usr/sbin:/usr/local/cuda/bin:/snap/bin
 
 if command -v nvim &> /dev/null; then
     VIM=nvim
@@ -28,7 +28,7 @@ export EDITOR=${VIM}
 # For programs like man, etc.
 export PAGER=less
 
-# alias
+# Alias
 alias rm='rm -i'
 alias cp='cp -i'
 alias ls='ls --hyperlink --color=auto'
@@ -48,30 +48,35 @@ fi
 unset VIMRUNTIME
 unset VIM
 
-# Set up golang proxy
+# Proxy
+# golang proxy
 export GOPROXY=http://www.goproxy.cn,http://www.goproxy.io,direct
-
-# Set up clash proxy
-# Allow WSL2 to access Clash: https://cloud.tencent.com/developer/article/1913248
-proxy_ip=
-proxy_port=
+# HF proxy
+export HF_ENDPOINT=https://hf-mirror.com
+# clash proxy
+# To allow WSL2 to access Clash, check: https://cloud.tencent.com/developer/article/1913248
+proxy_ip=127.0.0.1
+proxy_port=7890
 alias setp='
 export https_proxy="http://${proxy_ip}:${proxy_port}";
 export http_proxy="http://${proxy_ip}:${proxy_port}";
 export all_proxy="sock5://${proxy_ip}:${proxy_port}";
 export no_proxy="localhost,127.0.0.1"
-
 export HTTP_PROXY=${http_proxy}
 export HTTPS_PROXY=${https_proxy}
 export ALL_PROXY=${all_proxy}
 export NO_PROXY=${no_proxy}
 '
 alias unsetp='unset https_proxy http_proxy all_proxy ALL_PROXY'
-alias echop='echo ${proxy_ip}:${proxy_port}'
+alias echop='echo ${http_proxy}'
 setp # auto set proxy
 
-# Set up HF proxy
-export HF_ENDPOINT=https://hf-mirror.com
+# Data home
+# Massive data like models and datasets may need to be stored in a different place
+# DATA_HOME=
+# OLLAMA_MODELS=${DATA_HOME}/ollama # ollama models location
+# HF_HOME=${DATA_HOME}/huggingface # HF data locatio
+# LLAMA_INDEX_CACHE_DIR=${DATA_HOME}/llamaindex # llamaindex data location
 
 # <<< myshrc <<<
 

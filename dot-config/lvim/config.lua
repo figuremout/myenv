@@ -25,6 +25,8 @@ lvim.keys.normal_mode["g/"] = ":HopPatternMW<CR>"
 lvim.keys.normal_mode["<c-f>"] = ":Telescope live_grep<CR>"  -- search contents
 lvim.keys.normal_mode["<c-p>"] = ":Telescope find_files<CR>" -- search filename
 lvim.builtin.terminal.open_mapping = "<leader>\\"
+-- -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 
 -- -- to make it transparent, uncomment the following
 -- lvim.transparent_window = true
@@ -76,9 +78,6 @@ lvim.builtin.telescope.defaults.layout_strategy = 'horizontal'
 lvim.builtin.bufferline.options.numbers = function(opts)
     return string.format('%s', opts.raise(opts.id))
 end -- show buffer id on bufferline
--- -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
-lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope find_files<CR>", "Find Files" }
 
 -- -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
@@ -189,7 +188,7 @@ lvim.plugins = {
             vim.keymap.set('i', '<M-;>', function() return vim.fn['codeium#Accept']() end,
                 { expr = true, silent = true }) -- remap accept key
         end
-    }
+    },
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>

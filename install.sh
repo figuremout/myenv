@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# TMUX
-# Install tpm
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
 # Alacritty
 # Install themes
 # We use Alacritty's default Linux config directory as our storage location here.
