@@ -22,7 +22,9 @@ for file in ${prefix}*; do
     in_place="${file/${prefix}/${HOME}\/.}"
     backup="${file/${prefix}/dot-}"
     # back up
-    \cp -r ${in_place} ${backup_dir}/${backup}
+    if [ -e ${in_place} ]; then
+        \cp -r ${in_place} ${backup_dir}/${backup}
+    fi
     # overwrite
     \cp -rfT ${file} ${in_place}
 done
