@@ -38,6 +38,9 @@ if command -v lvim &> /dev/null; then
     alias vim='lvim'
 fi
 
+# ls output color for dir that o+w and not sticky is not distinct, now bold yellow fg
+LS_COLORS+=':ow=01;33'
+
 # Advice
 # check if disk partition is right, /home, swap, /, ...
 #echo "Detect md, mdadm exists, suggest make software RAID 5 and spare disk"
