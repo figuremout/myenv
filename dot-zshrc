@@ -86,7 +86,7 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(vi-mode colored-man-pages safe-paste web-search z command-not-found \
-         copyfile tmux conda-zsh-completion\
+         copyfile tmux conda-zsh-completion mvn\
          zsh-syntax-highlighting) # make sure zsh-syntax-highlighting last
 
 # Config vi-mode plugin
