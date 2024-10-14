@@ -78,8 +78,12 @@ setp # auto set proxy
 # Massive data like models and datasets may need to be stored in a different place
 # DATA_HOME=
 # OLLAMA_MODELS=${DATA_HOME}/ollama # ollama models location
-# HF_HOME=${DATA_HOME}/huggingface # HF data locatio
+# HF_HOME=${DATA_HOME}/huggingface # HF data location
+# MODELSCOPE_CACHE=${DATA_HOME}/modelscope # modelscope data location
 # LLAMA_INDEX_CACHE_DIR=${DATA_HOME}/llamaindex # llamaindex data location
+
+# Token
+# HF_TOKEN= # HF Access Token
 
 # <<< myshrc <<<
 

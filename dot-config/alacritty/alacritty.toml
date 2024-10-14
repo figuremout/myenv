@@ -4,8 +4,8 @@ import = [
 
 # FOR WINDOWS: Mannauly install nerd font and set to this terminal
 [font]
-#normal = { family = "DroidSansM Nerd Font Propo", style = "Regular" }
-size = 12
+normal = { family = "DroidSansM Nerd Font Propo", style = "Regular" }
+size = 18
 
 [keyboard]
 bindings = [
